@@ -20,7 +20,9 @@
 
 ## Why
 
-Making a music video leaves files everywhere: renders in one folder, voice takes on the desktop, cover references in Downloads, lyrics and subtitles somewhere else. HangDry gives them one place to live while you work, and one click to put them away when you're done.
+I make AI music videos, and every project ends with files scattered everywhere: generated clips in one folder, renders in another, voice takes on the desktop, cover references in Downloads, lyrics and subtitles somewhere else. Finding them while working is a chore, and tidying up afterwards is worse.
+
+HangDry was inspired by [Tendedero](https://github.com/alejandrobujan/tendedero) by Alejandro Buján, which hangs every screenshot on a line at the top of the screen. I loved the idea and wanted the same line for every kind of file, plus a way to file it all away when the project is done. HangDry gives your files one place to live while you work, and one click to put them away.
 
 - **Hang** files by dragging them to the top of the screen, or just copy them (⌘C, “Copy Image” in a browser, screenshots) and they hang themselves.
 - **Use** them from the line: drag a card into Finder, a browser upload box, Premiere, DaVinci, or any app.
@@ -51,7 +53,11 @@ Hanging a file only stores a link. Originals stay where they are until you bring
 
 Requires macOS 14 Sonoma or later.
 
-There is no signed release yet. Build it yourself (below), then copy `HangDry.app` into `/Applications`. HangDry lives in the menu bar (👕); there's no Dock icon.
+Download the latest `HangDry-x.y.z.dmg` from [Releases](https://github.com/ansonsiva/HangDry/releases/latest), open it, and drag HangDry into Applications. The app is signed with a Developer ID and notarized by Apple, so it opens normally.
+
+HangDry lives in the menu bar (👕); there's no Dock icon. Turn on **Open at Login** in its menu to keep it running.
+
+You can also [build it from source](#build-from-source).
 
 The first time something is copied as a file or image, macOS asks whether HangDry may read the clipboard. Set it to **Always Allow** in *System Settings → Privacy & Security → Paste* to stop the prompts.
 
@@ -134,6 +140,8 @@ These are written up in comments where they matter, but worth knowing before you
 - **File promises** (images dragged from browsers, Photos, chat apps) can only be received synchronously inside `performDragOperation`.
 - **Clipboard privacy** (macOS 15.4+): reading `changeCount` and `types` is silent; reading contents prompts the user. HangDry only reads contents when the types contain a file or an image.
 
+Release: `Scripts/make_release.sh` builds a Developer ID–signed, notarized DMG (needs your certificate and an App Store Connect API key; see the header of the script).
+
 Debug-only launch arguments for checking performance: `-demoAnimation` (open/close every few seconds) and `-demoShelf` (simulates a file held over the line).
 
 ## Sandboxing and privacy
@@ -152,6 +160,10 @@ HangDry runs in the App Sandbox. Every file it touches comes from something you 
 ## Contributing
 
 Issues and pull requests are welcome. Please run the tests before opening a PR. New UI text goes through `String(localized:)` (or a SwiftUI literal) so it lands in `Localizable.xcstrings`.
+
+## Acknowledgements
+
+- [Tendedero](https://github.com/alejandrobujan/tendedero) by Alejandro Buján, the screenshot clothesline that inspired HangDry. HangDry is an independent implementation and shares no code with it.
 
 ## License
 

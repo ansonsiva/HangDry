@@ -20,7 +20,9 @@
 
 ## 为什么做它
 
-做一支 MV，文件会散落得到处都是：渲染输出在一个文件夹，人声干音在桌面，封面参考在下载，歌词字幕又在别处。HangDry 让这些文件在制作期间有个统一的落脚点，项目做完再一键收好。
+我平时做 AI 视频和 MV，每个项目做下来，文件都散落得到处都是：生成的片段在一个文件夹，渲染输出在另一个，人声干音在桌面，封面参考在下载，歌词字幕又在别处。做的时候要到处翻，做完以后整理起来更头疼。
+
+HangDry 的灵感来自 Alejandro Buján 的 [Tendedero](https://github.com/alejandrobujan/tendedero)：它把每张截图挂在屏幕顶部的一根绳子上。我很喜欢这个点子，想让各种文件都能挂上去，并且在项目结束时能一键归档。于是有了 HangDry：制作期间，文件有个统一的落脚点；做完以后，一键收好。
 
 - **挂上**：把文件拖到屏幕顶部；或者直接复制（⌘C、浏览器里“拷贝图像”、截图到剪贴板），会自动挂上。
 - **取用**：从绳上把卡片拖进 Finder、网页上传框、Premiere、DaVinci 或任何 App。
@@ -51,7 +53,11 @@
 
 需要 macOS 14 Sonoma 或更新版本。
 
-目前还没有签名发布版，请按下面的方法自己编译，然后把 `HangDry.app` 拷进“应用程序”。HangDry 常驻菜单栏（👕），不在程序坞显示。
+从 [Releases](https://github.com/ansonsiva/HangDry/releases/latest) 下载最新的 `HangDry-x.y.z.dmg`，打开后把 HangDry 拖进“应用程序”即可。App 已用 Developer ID 签名并通过苹果公证，可以直接打开。
+
+HangDry 常驻菜单栏（👕），不在程序坞显示。在它的菜单里勾上“登录时启动”，开机后会自动运行。
+
+也可以[从源码编译](#从源码编译)。
 
 第一次复制文件或图片时，系统会询问是否允许 HangDry 读取剪贴板。到“系统设置 → 隐私与安全性 → 粘贴”里设为“始终允许”，以后就不会再问。
 
@@ -134,6 +140,8 @@ Scripts/      make_icon.swift（绘制 App 图标）
 - **文件承诺**（从浏览器、照片、聊天软件拖出来的图片）只能在 `performDragOperation` 里同步发起接收。
 - **剪贴板隐私**（macOS 15.4 起）：读取 `changeCount` 和 `types` 不会打扰用户，读取内容会弹窗询问。HangDry 只在类型里有文件或图片时才读取内容。
 
+发布：`Scripts/make_release.sh` 会打出用 Developer ID 签名并经过公证的 DMG（需要你的证书和 App Store Connect API 密钥，用法见脚本开头）。
+
 Debug 版专用的性能检查启动参数：`-demoAnimation`（每隔几秒自动收起再展开）和 `-demoShelf`（模拟拖着文件停在绳上）。
 
 ## 沙盒与隐私
@@ -152,6 +160,10 @@ HangDry 运行在 App 沙盒里，访问的每个文件都来自你的操作：�
 ## 参与贡献
 
 欢迎提 Issue 和 Pull Request。提交 PR 前请先跑一遍测试。新增界面文字用 `String(localized:)` 或 SwiftUI 字面量，这样会自动进入 `Localizable.xcstrings`。
+
+## 致谢
+
+- Alejandro Buján 的 [Tendedero](https://github.com/alejandrobujan/tendedero)：挂截图的晾衣绳，HangDry 的灵感来源。HangDry 是独立实现，没有使用它的代码。
 
 ## 许可证
 
